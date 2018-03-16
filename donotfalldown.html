@@ -1,0 +1,137 @@
+<html>
+    <title> DO NOT FALL DOWN</title>
+    <body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    
+    <script>
+        var canvas
+        var canvasContext
+        var thingX = 390;
+        var thingY = 70;
+        var dedScreen = false;
+        var playerScore = 0;
+        var speedY = 1;
+        window.onload = function() {
+            
+            function thingReset() {
+                thingY = 70;
+            }
+            
+            function handelMouseClick() {
+                if(dedScreen) {
+                    playerScore = 0;
+                    dedScreen = false;
+                    thingReset();
+                }
+            }
+            
+            
+            window.addEventListener('mousedown',handelMouseClick);
+            window.addEventListener('keyup',keyUp,false);
+            
+            function keyUp(key) {
+                // spac bar
+                if(key.keyCode == "32"){
+                    thingY = thingY - 30;
+                    playerScore = playerScore + 1;
+                }
+            }
+            
+            
+            var FPS = 75;
+            setInterval(callAll,1000/FPS);
+            
+            
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+            
+        }
+         function drawEverything() {
+             
+           
+                 
+                 
+            
+             
+             
+            // if(keyUp = true) {
+                         
+             //}
+     
+             
+             
+             
+              
+             // canvas
+             canvasContext.fillStyle ='black';
+            canvasContext.fillRect(0,0,canvas.width,canvas.height);
+            
+            if(dedScreen) {
+                canvasContext.fillStyle = 'red';
+                 canvasContext.fillText("SCORE",canvas.width - 250,100);
+                 canvasContext.fillText("0 BECAUSE YOU LOST",canvas.width - 210,100);
+                 canvasContext.fillText("GAME OVER",canvas.width/2- 40,canvas.height/2-10);
+                 canvasContext.fillText("CLICK TO CONTINUE",canvas.width/2-50,canvas.height/2-60);
+                return;
+            }
+            
+            
+            
+            // ball/charactar/ IDK
+            canvasContext.fillStyle = 'red';
+            canvasContext.beginPath();
+            canvasContext.arc(thingX, thingY, 10, 0,Math.PI*2,true);
+            canvasContext.fill();
+            
+            canvasContext.fillText(playerScore,canvas.width - 130,100);
+            canvasContext.fillText("Jumps",canvas.width - 101,100);
+            
+         }
+         
+         
+         
+         
+         function gravityY() {
+             thingY = thingY + 1;
+             if(playerScore >= 100 ) {
+                speedY = speedY + 1; 
+             }
+             
+             
+         }
+         
+         
+         
+         function moveEverything(){
+             
+             
+             if(dedScreen) {
+                 return;
+             }
+             
+             gravityY()
+             
+             if(thingY < 0) {
+               
+                 dedScreen = true;
+                 
+             }
+              if(thingY > canvas.height) {
+                 dedScreen = true;
+              }
+             
+         }
+         
+         
+         function callAll() {
+             drawEverything();
+             moveEverything();
+             keyUp()
+             
+                          
+   
+             
+         }
+         
+    </script>
+</html>
